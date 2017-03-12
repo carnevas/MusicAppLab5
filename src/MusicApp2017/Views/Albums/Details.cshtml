@@ -10,19 +10,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Title):
         </dt>
         <dd>
             @Model.Title
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Artist)
+            @Html.DisplayNameFor(model => model.Artist):
         </dt>
         <dd>
             @Model.Artist.Name
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.Genre):
         </dt>
         <dd>
             @Model.Genre.Name
@@ -31,5 +31,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AlbumID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Album List</a>
 </div>

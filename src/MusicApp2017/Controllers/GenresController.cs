@@ -21,7 +21,7 @@ namespace MusicApp2017.Controllers
     // GET: Genres/5
     public async Task<IActionResult> Index()
     {
-        var musicDbContext = _context.Genres.Include(a => a.Name);
+            var musicDbContext = _context.Genres;
         return View(await musicDbContext.ToListAsync());
     }
 
@@ -33,10 +33,10 @@ namespace MusicApp2017.Controllers
             return NotFound();
         }
             var genreContext = _context.Albums
-                .Include(a => a.Title)
+                .Include(a => a.Genre)
                 .Include(a => a.Artist);
         var genreAlbums = await genreContext
-            .SingleOrDefaultAsync(m => m.GenreID == id);
+            .Where(m => m.GenreID == id).ToListAsync();
         if (genreAlbums == null)
         {
             return NotFound();
@@ -62,7 +62,7 @@ namespace MusicApp2017.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["GenreID"] = new SelectList(_context.Genres, "GenreID", "Name", album.GenreID);
+            ViewData["GenreID"] = new SelectList(_context.Genres, "GenreID", "Name", genre.GenreID);
             return View(genre);
         }
         // GET: Genres/Edit/5

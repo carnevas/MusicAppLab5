@@ -4,13 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-<h3>@Model.First().Artist.Name Details</h3>
+<h3>@Model.First().Artist.Name</h3>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Album @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
@@ -23,13 +23,17 @@
             <tr>
                 <td>
                     <a asp-action="Details" asp-controller="Albums" asp-route-id="@item.AlbumID">
-                        @Html.DisplayFor(modelItem => item.Title)</a>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
                 </td>
                 <td>
                     <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
-                        @Html.DisplayFor(modelItem => item.Genre)</a>
+                        @Html.DisplayFor(modelItem => item.Genre.Name)
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<a asp-action="Edit" asp-route-id="@Model.First().ArtistID">Edit</a> |
+<a asp-action="Index">Back to Artist List</a>

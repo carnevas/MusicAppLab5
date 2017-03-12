@@ -21,7 +21,7 @@ namespace MusicApp2017.Controllers
         // GET: Artist/5
         public async Task<IActionResult> Index()
         {
-            var musicDbContext = _context.Artists.Include(a => a.Name);
+            var musicDbContext = _context.Artists;
             return View(await musicDbContext.ToListAsync());
         }
 
@@ -33,16 +33,37 @@ namespace MusicApp2017.Controllers
                 return NotFound();
             }
             var artistContext = _context.Albums
-                .Include(a => a.Title)
+                .Include(a => a.Artist)
                 .Include(a => a.Genre);
             var artistAlbums = await artistContext
-                .SingleOrDefaultAsync(m => m.ArtistID == id);
+                .Where(m => m.ArtistID == id).ToListAsync();
             if (artistAlbums == null)
             {
                 return NotFound();
             }
 
             return View(artistAlbums);
+        }
+        // GET: Genres/Create
+        public IActionResult Create()
+        {
+            ViewData["ArtistID"] = new SelectList(_context.Artists, "ArtistID", "Name");
+            return View();
+        }
+
+        // POST: Genres/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ArtistID, Name")] Artist artist)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(artist);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewData["GenreID"] = new SelectList(_context.Artists, "ArtistID", "Name", artist.ArtistID);
+            return View(artist);
         }
         // GET: Artists/Edit/5
         public async Task<IActionResult> Edit(int? id)
