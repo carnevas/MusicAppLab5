@@ -58,6 +58,13 @@ namespace MusicApp2017.Controllers
         {
             if (ModelState.IsValid)
             {
+                foreach (Genre contextGenre in _context.Genres.ToArray())
+                {
+                    if(genre.Name.ToLower().Equals(contextGenre.Name.ToLower()))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
                 _context.Add(genre);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

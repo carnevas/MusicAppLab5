@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -60,9 +58,18 @@ namespace MusicApp2017.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AlbumID,Title,ArtistID,GenreID,Likes")] Album album)
-        { 
+        {
             if (ModelState.IsValid)
             {
+                foreach (Album contextAlbum in _context.Albums.ToArray())
+                { 
+                if (album.Title.ToLower().Equals(contextAlbum.Title.ToLower()) &&
+                   album.ArtistID == contextAlbum.ArtistID &&
+                   album.GenreID == contextAlbum.GenreID)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

@@ -47,22 +47,29 @@ namespace MusicApp2017.Controllers
         // GET: Genres/Create
         public IActionResult Create()
         {
-            ViewData["ArtistID"] = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewData["ArtistID"] = new SelectList(_context.Artists, "ArtistID", "Name", "Bio");
             return View();
         }
 
         // POST: Genres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArtistID, Name")] Artist artist)
+        public async Task<IActionResult> Create([Bind("ArtistID, Name, Bio")] Artist artist)
         {
             if (ModelState.IsValid)
             {
+                foreach(Artist contextArtist in _context.Artists.ToArray())
+                {
+                    if(artist.Name.ToLower().Equals(contextArtist.Name.ToLower()))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
                 _context.Add(artist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["GenreID"] = new SelectList(_context.Artists, "ArtistID", "Name", artist.ArtistID);
+            ViewData["ArtistID"] = new SelectList(_context.Artists, "ArtistID", "Name", artist.ArtistID);
             return View(artist);
         }
         // GET: Artists/Edit/5
@@ -85,7 +92,7 @@ namespace MusicApp2017.Controllers
         // POST: Artists/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArtistID,Name")] Artist artist)
+        public async Task<IActionResult> Edit(int id, [Bind("ArtistID, Name, Bio")] Artist artist)
         {
             if (id != artist.ArtistID)
             {

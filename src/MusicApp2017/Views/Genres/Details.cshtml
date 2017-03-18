@@ -4,36 +4,46 @@
     ViewData["Title"] = "Details";
 }
 
-<h3>@Model.First().Genre.Name Genre</h3>
+@if (Model.Any() == false)
+{
+    <h2>No information have been recorded for this genre.</h2>
+    <a asp-action="Index">Back to Genre List</a>
+}
+else
+{
+    <h3>@Model.First().Genre.Name Genre</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Album @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-action="Details" asp-controller="Albums" asp-route-id="@item.AlbumID">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </a>
-                </td>
-                <td>
-                    <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
-                        @Html.DisplayFor(modelItem => item.Artist.Name)
-                    </a>
-                </td>
+                <th>
+                    Album @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Artist)
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-<a asp-action="Edit" asp-route-id="@Model.First().GenreID">Edit</a> |
-<a asp-action="Index">Back to Genre List</a>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Albums" asp-route-id="@item.AlbumID">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
+                            @Html.DisplayFor(modelItem => item.Artist.Name)
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a asp-action="Edit" asp-route-id="@Model.First().GenreID">Edit</a> |
+        <a asp-action="Index">Back to Genre List</a>
+    </p>
+}
