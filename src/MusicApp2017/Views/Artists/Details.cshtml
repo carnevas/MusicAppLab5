@@ -32,7 +32,7 @@
 @if (Model.Any() == false)
 {
     <h2>No information have been recorded for this artist.</h2>
-    <a asp-action="Index">Back to Artist List</a>
+    <a asp-action="Index">Artist List</a>
 }
 else
 {
@@ -73,6 +73,6 @@ else
     </table>
 <p>
 <a asp-action="Edit" asp-route-id="@Model.First().ArtistID">Edit</a> |
-<a asp-action="Index">Back to Artist List</a>
+<a asp-action="Index">Artist List</a>
 </p>
 }
