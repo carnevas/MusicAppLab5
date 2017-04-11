@@ -134,6 +134,33 @@ namespace MusicApp2017.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Edit()
+        {
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(await user);
+        }
+        [HttpPut]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(LoginViewModel model, string returnUrl = null)
+        {
+            ViewData["returnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var result = _userManager.UpdateAsync(user);
+                if (result.IsCompleted)
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+                AddErrors(result.Result);
+            }
+            return View(model);
+        }
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)

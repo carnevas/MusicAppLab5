@@ -1,4 +1,8 @@
 @model IEnumerable<MusicApp2017.Models.Album>
+@using MusicApp2017.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -30,10 +34,13 @@
     </div>
 </div>
 <h2>Albums</h2>
-
 <p>
     <a asp-action="Create">Add Album</a>
 </p>
+@if(SignInManager.IsSignedIn(User))
+{
+    <h3> @Model.First().Genre.Name </h3>
+}
 <table class="table">
     <thead>
         <tr>
@@ -76,3 +83,7 @@
 }
     </tbody>
 </table>
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-action="Index" >View All Albums</a>
+}
