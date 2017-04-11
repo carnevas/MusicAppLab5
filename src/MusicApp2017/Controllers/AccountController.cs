@@ -141,6 +141,7 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
+            ViewData["GenreID"] = new SelectList(_context.Genres, "GenreID", "Name");
             return View(await user);
         }
         [HttpPut]
@@ -151,6 +152,8 @@ namespace MusicApp2017.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                user.GenreID = model.GenreID;
+
                 var result = _userManager.UpdateAsync(user);
                 if (result.IsCompleted)
                 {

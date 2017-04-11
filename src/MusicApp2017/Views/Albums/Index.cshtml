@@ -37,9 +37,12 @@
 <p>
     <a asp-action="Create">Add Album</a>
 </p>
-@if(SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User))
 {
-    <h3> @Model.First().Genre.Name </h3>
+    if (ViewData["Genre"] != null)
+    { 
+        <h3> @ViewData["Genre"] </h3>
+    }
 }
 <table class="table">
     <thead>
@@ -85,5 +88,12 @@
 </table>
 @if (SignInManager.IsSignedIn(User))
 {
-    <a asp-action="Index" >View All Albums</a>
+    if (ViewData["Genre"] == null)
+    {
+        <a asp-action="Index">View All Albums in Favorite Genre</a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-route-all="true">View All Albums</a>
+    }
 }

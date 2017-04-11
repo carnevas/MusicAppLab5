@@ -22,11 +22,15 @@ namespace MusicApp2017.Controllers
 
         // GET: Albums
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool? all = false)
         {
             var musicDbContext = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
             if (User.Identity.IsAuthenticated)
             {
+                if (all == true)
+                {
+                    return View(await musicDbContext.ToListAsync());
+                }
                 ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 var genreContext = _context.Albums
                     .Include(a => a.Genre)
@@ -35,6 +39,7 @@ namespace MusicApp2017.Controllers
                     .Where(m => m.GenreID == user.GenreID).ToListAsync();
                 if (genreAlbums != null)
                 {
+                    ViewData["Genre"] = user.Genre.Name;
                     return View(genreAlbums);
                 }
             }
