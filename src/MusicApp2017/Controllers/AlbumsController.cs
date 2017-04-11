@@ -4,26 +4,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicApp2017.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace MusicApp2017.Controllers
 {
     public class AlbumsController : Controller
     {
         private readonly MusicDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AlbumsController(MusicDbContext context)
+        public AlbumsController(MusicDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
 
         // GET: Albums
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var musicDbContext = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
+            if (User.Identity.IsAuthenticated)
+            {
+                ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var genreContext = _context.Albums
+                    .Include(a => a.Genre)
+                    .Include(a => a.Artist);
+                var genreAlbums = await genreContext
+                    .Where(m => m.GenreID == user.GenreID).ToListAsync();
+                if (genreAlbums != null)
+                {
+                    return View(genreAlbums);
+                }
+            }
             return View(await musicDbContext.ToListAsync());
         }
 
         // GET: Albums/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +64,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["ArtistID"] = new SelectList(_context.Artists, "ArtistID", "Name");
@@ -57,7 +77,7 @@ namespace MusicApp2017.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumID,Title,ArtistID,GenreID,Likes")] Album album)
+        public async Task<IActionResult> Create([Bind("AlbumID,Title,ArtistID,GenreID")] Album album)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +100,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -135,6 +156,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

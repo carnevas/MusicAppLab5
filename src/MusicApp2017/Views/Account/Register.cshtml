@@ -1,4 +1,4 @@
-﻿@model MVCDemo.Models.AccountViewModels.RegisterViewModel
+﻿@model MusicApp2017.Models.AccountViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -26,6 +26,12 @@
         <div class="col-md-10">
             <input asp-for="ConfirmPassword" class="form-control" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreID" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="GenreID" class="form-control" asp-items="ViewBag.GenreID"></select>
         </div>
     </div>
     <div class="form-group">

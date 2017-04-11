@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using MusicApp2017.Models;
 
 namespace MusicApp2017.Controllers
@@ -12,13 +13,14 @@ namespace MusicApp2017.Controllers
     public class GenresController : Controller
     { 
      private readonly MusicDbContext _context;
-
+    
     public GenresController(MusicDbContext context)
     {
         _context = context;
     }
 
     // GET: Genres/5
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
             var musicDbContext = _context.Genres;
@@ -26,6 +28,7 @@ namespace MusicApp2017.Controllers
     }
 
     // GET: Genres/Details/5
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -45,6 +48,7 @@ namespace MusicApp2017.Controllers
         return View(genreAlbums);
     }
         // GET: Genres/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["GenreID"] = new SelectList(_context.Genres, "GenreID", "Name");
@@ -73,6 +77,7 @@ namespace MusicApp2017.Controllers
             return View(genre);
         }
         // GET: Genres/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)

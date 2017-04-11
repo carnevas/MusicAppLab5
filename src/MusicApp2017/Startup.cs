@@ -37,7 +37,7 @@ namespace MusicApp2017
             services.AddMvc();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddEntityFrameworkStores<MusicDbContext>()
                .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
@@ -68,6 +68,7 @@ namespace MusicApp2017
             }
 
             app.UseStaticFiles();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
