@@ -134,8 +134,9 @@ namespace MusicApp2017.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(string returnUrl)
         {
+            ViewData["returnUrl"] = returnUrl;
             var user = _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null)
             {
@@ -146,20 +147,20 @@ namespace MusicApp2017.Controllers
         }
         [HttpPut]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
         {
             ViewData["returnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var user = _userManager.FindByEmailAsync(model.Email).Result;
                 user.GenreID = model.GenreID;
-
-                var result = _userManager.UpdateAsync(user);
-                if (result.IsCompleted)
+                
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
                 {
                     return RedirectToLocal(returnUrl);
                 }
-                AddErrors(result.Result);
+                AddErrors(result);
             }
             return View(model);
         }
