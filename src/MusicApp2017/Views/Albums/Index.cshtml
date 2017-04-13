@@ -40,89 +40,109 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <h3> Favorite Genre: @UserManager.FindByNameAsync(User.Identity.Name).Result.Genre.Name </h3>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@if (SignInManager.IsSignedIn(User))
-{
+    var Albums = new List<Album>();
     foreach (var item in Model)
     {
-        var albums = false;
         if (item.Genre == UserManager.FindByNameAsync(User.Identity.Name).Result.Genre)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-
-                <td>
-                    <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
-                        @Html.DisplayFor(modelItem => item.Artist.Name)
-                    </a>
-                </td>
-                <td>
-                    <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
-                        @Html.DisplayFor(modelItem => item.Genre.Name)
-                    </a>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
-                </td>
-            </tr>
-            albums = true;
+            Albums.Add(item);
         }
-        if(albums == false)
-        {
-            <h3>There are no albums in your favorite genre.</h3>
-        }
+    }
+    if (Albums.Count == 0)
+    {
+        <p>There are no albums in your favorite Genre</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Artist)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Albums)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
 
+                    <td>
+                        <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
+                            @Html.DisplayFor(modelItem => item.Artist.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
+                            @Html.DisplayFor(modelItem => item.Genre.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
     }
 }
 else
 {
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            
-            <td>
-                <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
-                    @Html.DisplayFor(modelItem => item.Artist.Name)
-                </a>
-            </td>
-            <td>
-                <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
-                    @Html.DisplayFor(modelItem => item.Genre.Name)
-                </a>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
-            </td>
-        </tr>
+    @foreach (var item in Model)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Artist)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+                    <td>
+                        <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
+                            @Html.DisplayFor(modelItem => item.Artist.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
+                            @Html.DisplayFor(modelItem => item.Genre.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     }
 }
-    </tbody>
-</table>
 @if (SignInManager.IsSignedIn(User))
 {
     if (ViewData["View"].Equals("FavoriteAlbums"))
