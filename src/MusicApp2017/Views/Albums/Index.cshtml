@@ -42,7 +42,7 @@
     var Albums = new List<Album>();
     foreach (var item in Model)
     {
-        if (item.Genre == UserManager.FindByNameAsync(User.Identity.Name).Result.Genre)
+        if (item.Genre.Equals(UserManager.FindByNameAsync(User.Identity.Name).Result.Genre))
         {
             Albums.Add(item);
         }
