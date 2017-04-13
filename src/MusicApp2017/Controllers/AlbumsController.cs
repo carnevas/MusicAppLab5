@@ -31,6 +31,10 @@ namespace MusicApp2017.Controllers
                 {
                     ViewData["View"] = "FavoriteAlbums";
                 }
+                else
+                {
+                    ViewData["View"] = "AllAlbums";
+                }
             }
             return View(await musicDbContext.ToListAsync());
         }
