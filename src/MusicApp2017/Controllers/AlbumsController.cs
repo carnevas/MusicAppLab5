@@ -27,20 +27,9 @@ namespace MusicApp2017.Controllers
             var musicDbContext = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
             if (User.Identity.IsAuthenticated)
             {
-                if (all == true)
+                if (all == false)
                 {
-                    return View(await musicDbContext.ToListAsync());
-                }
-                ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                var genreContext = _context.Albums
-                    .Include(a => a.Genre)
-                    .Include(a => a.Artist);
-                var genreAlbums = await genreContext
-                    .Where(m => m.GenreID == user.GenreID).ToListAsync();
-                if (genreAlbums != null)
-                {
-                    ViewData["Genre"] = user.Genre.Name;
-                    return View(genreAlbums);
+                    ViewData["View"] = "FavoriteAlbums";
                 }
             }
             return View(await musicDbContext.ToListAsync());

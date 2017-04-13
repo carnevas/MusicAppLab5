@@ -39,18 +39,14 @@
 </p>
 @if (SignInManager.IsSignedIn(User))
 {
-    if (ViewData["Genre"] != null)
-    { 
-        <h3> @ViewData["Genre"] </h3>
-    }
+    <h3> Favorite Genre: @UserManager.FindByNameAsync(User.Identity.Name).Result.Genre.Name </h3>
 }
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Artist)
             </th>
@@ -61,7 +57,47 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@if (SignInManager.IsSignedIn(User))
+{
+    foreach (var item in Model)
+    {
+        var albums = false;
+        if (item.Genre == UserManager.FindByNameAsync(User.Identity.Name).Result.Genre)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
+                        @Html.DisplayFor(modelItem => item.Artist.Name)
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Genres" asp-route-id="@item.GenreID">
+                        @Html.DisplayFor(modelItem => item.Genre.Name)
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
+                </td>
+            </tr>
+            albums = true;
+        }
+        if(albums == false)
+        {
+            <h3>There are no albums in your favorite genre.</h3>
+        }
+
+    }
+}
+else
+{
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -83,17 +119,18 @@
                 <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
             </td>
         </tr>
+    }
 }
     </tbody>
 </table>
 @if (SignInManager.IsSignedIn(User))
 {
-    if (ViewData["Genre"] == null)
+    if (ViewData["View"].Equals("FavoriteAlbums"))
     {
-        <a asp-action="Index">View All Albums in Favorite Genre</a>
+        <a asp-action="Index" asp-route-all="true">View All Albums</a>
     }
     else
     {
-        <a asp-action="Index" asp-route-all="true">View All Albums</a>
+        <a asp-action="Index">View All Albums in Favorite Genre</a>
     }
 }

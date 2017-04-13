@@ -14,5 +14,6 @@ namespace MusicApp2017.Models.AccountViewModels
 
         [Required]
         public int GenreID { get; set; }
+        public Genre Genre { get; set; }
     }
 }

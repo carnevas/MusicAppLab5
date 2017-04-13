@@ -9,11 +9,11 @@ namespace MusicApp2017.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        //Foreign Key
         [Display(Name = "Favorite Genre")]
+        [Required]
         public int GenreID { get; set; }
+        //Navigation Property
         public Genre Genre { get; set; }
     }
-
-
-
 }

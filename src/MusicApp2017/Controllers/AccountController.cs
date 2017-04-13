@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using MusicApp2017.Models;
 using MusicApp2017.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace MusicApp2017.Controllers
 {
@@ -145,7 +146,7 @@ namespace MusicApp2017.Controllers
             ViewData["GenreID"] = new SelectList(_context.Genres, "GenreID", "Name");
             return View(await user);
         }
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
         {
