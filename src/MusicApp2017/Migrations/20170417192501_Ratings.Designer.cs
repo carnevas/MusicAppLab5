@@ -8,9 +8,10 @@ using MusicApp2017.Models;
 namespace MusicApp2017.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170417192501_Ratings")]
+    partial class Ratings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -232,15 +233,17 @@ namespace MusicApp2017.Migrations
                     b.Property<int>("RatingID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Album");
+
                     b.Property<int>("AlbumID");
 
                     b.Property<int>("RatingValue");
 
+                    b.Property<string>("User");
+
                     b.Property<int>("UserID");
 
                     b.HasKey("RatingID");
-
-                    b.HasIndex("AlbumID");
 
                     b.ToTable("Ratings");
                 });
@@ -300,14 +303,6 @@ namespace MusicApp2017.Migrations
                     b.HasOne("MusicApp2017.Models.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MusicApp2017.Models.Rating", b =>
-                {
-                    b.HasOne("MusicApp2017.Models.Album", "Album")
-                        .WithMany()
-                        .HasForeignKey("AlbumID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }
