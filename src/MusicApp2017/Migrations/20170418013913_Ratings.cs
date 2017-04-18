@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicApp2017.Migrations
 {
-    public partial class UpdateRatingsTable : Migration
+    public partial class Ratings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

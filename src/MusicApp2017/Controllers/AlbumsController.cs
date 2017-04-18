@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MusicApp2017.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace MusicApp2017.Controllers
 {
@@ -170,7 +171,14 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-
+            var ratings = await _context.Ratings
+                .Where(a => a.AlbumID == id).ToListAsync();
+            double sum = 0;
+            foreach (Rating value in ratings)
+            {
+                sum += value.RatingValue;
+            }
+            album.Rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero); 
             return View(album);
         }
 
@@ -183,6 +191,24 @@ namespace MusicApp2017.Controllers
             _context.Albums.Remove(album);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Rate(int? id)
+        {
+            var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == id);
+            return View(album);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Rate(int? id, [Bind("RatingID,RatingValue, AlbumID, UserID")] Rating rating)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(rating);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(rating);
         }
 
         private bool AlbumExists(int id)

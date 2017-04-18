@@ -49,7 +49,7 @@
         @if (Model.Artist.Bio != null)
         {
             <dt>
-                Artist Bio:
+                @Html.DisplayNameFor(model => model.Artist.Bio):
             </dt>
             <dd>
                 @Model.Artist.Bio
@@ -61,9 +61,16 @@
         <dd>
             @Model.Genre.Name
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd>
+            @Model.Rating out of 5
+        </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AlbumID">Edit</a> |
+    <a asp-action="Rate" asp-route-id="@Model.AlbumID">Rate Album</a>
     <a asp-action="Index">Album List</a>
 </div>
