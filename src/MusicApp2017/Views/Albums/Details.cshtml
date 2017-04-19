@@ -76,7 +76,7 @@
 @if (User.Identity.IsAuthenticated)
 {
 <hr/>
-<form method="post">
+<form asp-controller="Album" asp-action="Rate">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="AlbumID" value="@Model.AlbumID" />
     <input type="hidden" asp-for="UserID" value="@UserManager.FindByNameAsync(User.Identity.Name).Id" />
@@ -97,6 +97,5 @@
 }
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AlbumID">Edit</a> |
-    <a asp-action="Rate" asp-route-id="@Model.AlbumID">Rate Album</a>
     <a asp-action="Index">Album List</a>
 </div>

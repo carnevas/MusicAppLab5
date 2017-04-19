@@ -37,6 +37,10 @@ namespace MusicApp2017.Controllers
                     ViewData["View"] = "AllAlbums";
                 }
             }
+            foreach(Album album in musicDbContext)
+            {
+                album.Rating = GetRating(album.AlbumID).Result;
+            }
             return View(await musicDbContext.ToListAsync());
         }
 
@@ -171,14 +175,7 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-            var ratings = await _context.Ratings
-                .Where(a => a.AlbumID == id).ToListAsync();
-            double sum = 0;
-            foreach (Rating value in ratings)
-            {
-                sum += value.RatingValue;
-            }
-            album.Rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero); 
+            album.Rating = GetRating(id).Result;
             return View(album);
         }
 
@@ -193,13 +190,7 @@ namespace MusicApp2017.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Rate(int? id)
-        {
-            var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == id);
-            return View(album);
-        }
-
-        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Rate(int? id, [Bind("RatingID,RatingValue, AlbumID, UserID")] Rating rating)
         {
             if (ModelState.IsValid)
@@ -214,6 +205,19 @@ namespace MusicApp2017.Controllers
         private bool AlbumExists(int id)
         {
             return _context.Albums.Any(e => e.AlbumID == id);
+        }
+
+        private async Task<double> GetRating(int? id)
+        {
+            var ratings = await _context.Ratings
+                .Where(a => a.AlbumID == id).ToListAsync();
+            double sum = 0;
+            foreach (Rating value in ratings)
+            {
+                sum += value.RatingValue;
+            }
+            double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
+            return rating;
         }
     }
 }

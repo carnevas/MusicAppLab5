@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MusicApp2017.Models
 {
@@ -24,6 +25,6 @@ namespace MusicApp2017.Models
         public Genre Genre { get; set; }
         
         [Display (Name = "Rating")]
-        public double Rating { get; set; }
+        public double Rating { get; set;}
     }
 }
