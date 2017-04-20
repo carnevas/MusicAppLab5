@@ -20,6 +20,6 @@ namespace MusicApp2017.Models
         public Album Album { get; set; }
 
         //foreign key
-        public int UserID { get; set; }
+        public String UserID { get; set; }
     }
 }

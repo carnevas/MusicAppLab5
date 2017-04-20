@@ -25,7 +25,9 @@ namespace MusicApp2017.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(bool? all = false)
         {
-            var musicDbContext = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
+            var musicDbContext = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre);
             if (User.Identity.IsAuthenticated)
             {
                 if (all == false)
@@ -36,10 +38,6 @@ namespace MusicApp2017.Controllers
                 {
                     ViewData["View"] = "AllAlbums";
                 }
-            }
-            foreach(Album album in musicDbContext)
-            {
-                album.Rating = GetRating(album.AlbumID).Result;
             }
             return View(await musicDbContext.ToListAsync());
         }
@@ -62,7 +60,7 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["Values"] = new SelectList(Enumerable.Range(1, 5));
             return View(album);
         }
 
@@ -93,6 +91,7 @@ namespace MusicApp2017.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                album.Rating = 0;
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -126,7 +125,7 @@ namespace MusicApp2017.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,ArtistID,GenreID,Likes")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,ArtistID,GenreID")] Album album)
         {
             if (id != album.AlbumID)
             {
@@ -175,7 +174,6 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-            album.Rating = GetRating(id).Result;
             return View(album);
         }
 
@@ -191,10 +189,13 @@ namespace MusicApp2017.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Rate(int? id, [Bind("RatingID,RatingValue, AlbumID, UserID")] Rating rating)
+        public async Task<IActionResult> Rate([Bind("RatingID, RatingValue, AlbumID, UserID")] Rating rating)
         {
             if (ModelState.IsValid)
             {
+                var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == rating.AlbumID);
+                album.Rating = GetRating(rating.AlbumID).Result;
+                _context.Albums.Update(album);
                 _context.Add(rating);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -211,13 +212,20 @@ namespace MusicApp2017.Controllers
         {
             var ratings = await _context.Ratings
                 .Where(a => a.AlbumID == id).ToListAsync();
-            double sum = 0;
-            foreach (Rating value in ratings)
+            if(ratings == null)
             {
-                sum += value.RatingValue;
+                return 0;
             }
-            double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
-            return rating;
+            else
+            {
+                double sum = 0;
+                foreach (Rating value in ratings)
+                {
+                    sum += value.RatingValue;
+                }
+                double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
+                return rating;
+            }
         }
     }
 }

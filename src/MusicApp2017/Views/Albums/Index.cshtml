@@ -79,7 +79,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
-
                     <td>
                         <a asp-action="Details" asp-controller="Artists" asp-route-id="@item.ArtistID">
                             @Html.DisplayFor(modelItem => item.Artist.Name)
@@ -91,7 +90,10 @@
                         </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Rating)
+                        @if (item.Rating != 0)
+                        {
+                            Html.DisplayFor(modelItem => item.Rating);
+                        }
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
@@ -143,7 +145,10 @@ else
                 </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rating)
+                @if (item.Rating == 0)
+                {
+                    Html.DisplayFor(modelItem => item.Rating);
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
