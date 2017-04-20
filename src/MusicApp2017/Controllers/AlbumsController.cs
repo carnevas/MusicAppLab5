@@ -60,9 +60,10 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-            ViewData["Values"] = new SelectList(Enumerable.Range(1, 5));
+
             return View(album);
         }
+        
 
         // GET: Albums/Create
         [Authorize]
@@ -187,45 +188,9 @@ namespace MusicApp2017.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-        [Authorize]
-        public async Task<IActionResult> Rate([Bind("RatingID, RatingValue, AlbumID, UserID")] Rating rating)
-        {
-            if (ModelState.IsValid)
-            {
-                var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == rating.AlbumID);
-                album.Rating = GetRating(rating.AlbumID).Result;
-                _context.Albums.Update(album);
-                _context.Add(rating);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(rating);
-        }
-
         private bool AlbumExists(int id)
         {
             return _context.Albums.Any(e => e.AlbumID == id);
-        }
-
-        private async Task<double> GetRating(int? id)
-        {
-            var ratings = await _context.Ratings
-                .Where(a => a.AlbumID == id).ToListAsync();
-            if(ratings == null)
-            {
-                return 0;
-            }
-            else
-            {
-                double sum = 0;
-                foreach (Rating value in ratings)
-                {
-                    sum += value.RatingValue;
-                }
-                double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
-                return rating;
-            }
         }
     }
 }

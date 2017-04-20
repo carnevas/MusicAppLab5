@@ -75,24 +75,8 @@
 @if (User.Identity.IsAuthenticated)
 {
 <hr/>
-<form asp-controller="Album" asp-action="Rate">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="AlbumID" value="@Model.AlbumID" />
-    <input type="hidden" asp-for="UserID" value="@UserManager.FindByNameAsync(User.Identity.Name).Id" />
-    <input type="hidden" asp-for="RatingID" />
-    <div class="form-group">
-        <label asp-for="RatingValue" class="control-label col-md-2"></label>
-        <div class="col-md-10">
-            <select asp-for="RatingValue" class="form-control" asp-items="@ViewBag.Values"></select>
-            <span asp-validation-for="RatingValue" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Rate" class="btn btn-default" />
-        </div>
-    </div>
-</form>    
+<input type="hidden" asp-route-id="@Model.AlbumID"/>
+@await Html.PartialAsync("Rate")
 }
 else
 {

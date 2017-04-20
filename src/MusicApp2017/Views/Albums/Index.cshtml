@@ -90,9 +90,9 @@
                         </a>
                     </td>
                     <td>
-                        @if (item.Rating != 0)
+                        @if (item.Rating != 0.0)
                         {
-                            Html.DisplayFor(modelItem => item.Rating);
+                            @Html.DisplayFor(modelItem => item.Rating);
                         }
                     </td>
                     <td>
@@ -145,9 +145,9 @@ else
                 </a>
             </td>
             <td>
-                @if (item.Rating == 0)
+                @if (item.Rating != 0.0)
                 {
-                    Html.DisplayFor(modelItem => item.Rating);
+                    @Html.DisplayFor(modelItem => item.Rating);
                 }
             </td>
             <td>
