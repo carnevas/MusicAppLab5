@@ -8,12 +8,6 @@ namespace MusicApp2017.Models
 {
     public class Album
     {
-        private readonly MusicDbContext _context;
-
-        public Album(MusicDbContext context)
-        {
-            _context = context;
-        }
         public int AlbumID { get; set; }
         [Required(ErrorMessage ="Title is required")]
         public string Title { get; set; }
@@ -28,10 +22,10 @@ namespace MusicApp2017.Models
         // Navigation property
         public Genre Genre { get; set; }
 
-        public async Task<double> GetRating()
+        public double GetRating(MusicDbContext _context)
         {
-            var ratings = await _context.Ratings
-                .Where(a => a.AlbumID == AlbumID).ToListAsync();
+            var ratings =  _context.Ratings
+                .Where(a => a.AlbumID == AlbumID).ToList();
             if (ratings == null)
             {
                 return 0;

@@ -59,7 +59,7 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-            ViewData["Rating"] = album.GetRating().Result;
+            ViewData["Rating"] = album.GetRating(_context).Result;
             return View(album);
         }
         

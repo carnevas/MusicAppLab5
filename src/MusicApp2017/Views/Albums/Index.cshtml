@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject MusicDbContext context
 
 @{
     ViewData["Title"] = "Index";
@@ -90,9 +91,9 @@
                         </a>
                     </td>
                     <td>
-                        @if (item.GetRating().Result != 0.0)
+                        @if (item.GetRating(context) != 0.0)
                         {
-                            @Html.DisplayFor(modelItem => item.GetRating().Result);
+                            @Html.DisplayFor(modelItem => item.GetRating(context));
                         }
                     </td>
                     <td>
@@ -145,9 +146,9 @@ else
                 </a>
             </td>
             <td>
-                @if (item.GetRating().Result != 0.0)
+                @if (item.GetRating(context) != 0.0)
                 {
-                    @Html.DisplayFor(modelItem => item.GetRating().Result);
+                    @Html.DisplayFor(modelItem => item.GetRating(context));
                 }
             </td>
             <td>

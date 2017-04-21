@@ -2,6 +2,7 @@
 @using MusicApp2017.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+@inject MusicDbContext context
 
 @{
     ViewData["Title"] = "Details";
@@ -65,10 +66,10 @@
             @Model.Genre.Name
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Rating)
+            @Html.DisplayNameFor(model => model.GetRating(context).Result)
         </dt>
         <dd>
-            @Model.Rating out of 5
+            @Model.GetRating(context).Result out of 5
         </dd>
     </dl>
 </div>
