@@ -40,32 +40,11 @@ namespace MusicApp2017.Controllers
                 rating.AlbumID = id;
                 rating.RatingValue = value;
                 rating.UserID = _userManager.GetUserId(User);
-                album.Rating = GetRating(rating.AlbumID).Result;
-                _context.Albums.Update(album);
                 _context.Add(rating);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(value);
-        }
-        private async Task<double> GetRating(int? id)
-        {
-            var ratings = await _context.Ratings
-                .Where(a => a.AlbumID == id).ToListAsync();
-            if (ratings == null)
-            {
-                return 0;
-            }
-            else
-            {
-                double sum = 0;
-                foreach (Rating value in ratings)
-                {
-                    sum += value.RatingValue;
-                }
-                double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
-                return rating;
-            }
         }
     }
 }

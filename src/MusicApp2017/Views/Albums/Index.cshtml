@@ -67,7 +67,7 @@
                         @Html.DisplayNameFor(model => model.Genre)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Rating)
+                        Rating
                     </th>
                     <th></th>
                 </tr>
@@ -90,9 +90,9 @@
                         </a>
                     </td>
                     <td>
-                        @if (item.Rating != 0.0)
+                        @if (item.GetRating().Result != 0.0)
                         {
-                            @Html.DisplayFor(modelItem => item.Rating);
+                            @Html.DisplayFor(modelItem => item.GetRating().Result);
                         }
                     </td>
                     <td>
@@ -121,7 +121,7 @@ else
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Rating)
+                    Rating
                 </th>
                 <th></th>
             </tr>
@@ -145,9 +145,9 @@ else
                 </a>
             </td>
             <td>
-                @if (item.Rating != 0.0)
+                @if (item.GetRating().Result != 0.0)
                 {
-                    @Html.DisplayFor(modelItem => item.Rating);
+                    @Html.DisplayFor(modelItem => item.GetRating().Result);
                 }
             </td>
             <td>

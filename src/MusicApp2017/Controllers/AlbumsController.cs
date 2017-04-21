@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using MusicApp2017.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace MusicApp2017.Controllers
 {
@@ -60,7 +59,7 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["Rating"] = album.GetRating().Result;
             return View(album);
         }
         
@@ -92,7 +91,6 @@ namespace MusicApp2017.Controllers
                         return RedirectToAction("Index");
                     }
                 }
-                album.Rating = 0;
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
