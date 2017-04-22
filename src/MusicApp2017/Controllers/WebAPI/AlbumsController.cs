@@ -19,7 +19,7 @@ namespace MusicApp2017.Controllers.WebAPI
         {
             _context = context;
         }
-        // GET: api/values
+        // GET: api/albums
         [HttpGet]
         public IEnumerable<Album> Get()
         {
@@ -29,7 +29,7 @@ namespace MusicApp2017.Controllers.WebAPI
             return albums.ToList();
         }
 
-        // GET api/values/5
+        // GET api/albums/5
         [HttpGet("{id}")]
         public Album Get(int id)
         {
@@ -40,7 +40,7 @@ namespace MusicApp2017.Controllers.WebAPI
             return album;
         }
 
-        // POST api/values
+        // POST api/albums
         [HttpPost]
         public void Post([FromBody]Album album)
         {
@@ -48,7 +48,7 @@ namespace MusicApp2017.Controllers.WebAPI
             _context.SaveChanges();
         }
 
-        // PUT api/values/5
+        // PUT api/albums/5
         [HttpPut("{id}")]
         public void Put([FromBody]Album album)
         {
@@ -56,7 +56,7 @@ namespace MusicApp2017.Controllers.WebAPI
             _context.SaveChanges();
         }
 
-        // DELETE api/values/5
+        // DELETE api/albums/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

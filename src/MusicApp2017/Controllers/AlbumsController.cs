@@ -13,6 +13,7 @@ namespace MusicApp2017.Controllers
     {
         private readonly MusicDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly RoleManager<ApplicationUser> _roleManager;
 
         public AlbumsController(MusicDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -99,7 +100,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Edit/5
-        [Authorize]
+        [Authorize (Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -155,7 +156,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Delete/5
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

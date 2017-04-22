@@ -65,13 +65,13 @@
         <dd>
             @Model.Genre.Name
         </dd>
-        @if(Model.GetRating(context) != 0)
+        @if(Model.Rating != 0)
         { 
         <dt>
-            Rating:
+            @Html.DisplayNameFor(model => model.Rating):
         </dt>
         <dd>
-            @Model.GetRating(context) out of 5
+            @Model.Rating out of 5
         </dd>
         }
     </dl>
