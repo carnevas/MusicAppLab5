@@ -24,7 +24,7 @@ namespace MusicApp2017.Controllers
             _userManager = userManager;
         }
         [Authorize]
-        public IActionResult Rate(int? id, string returnUrl = null)
+        public IActionResult Rate(int? id)
         {
             var album = _context.Albums.Where(a => a.AlbumID == id);
             return View(album);
@@ -40,11 +40,13 @@ namespace MusicApp2017.Controllers
             };
             rating.AlbumID = id;
             var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == rating.AlbumID);
-            album.Rating = album.GetRating(_context);
-            _context.Update(album);
             _context.Ratings.Add(rating);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(AlbumsController.Details), album.AlbumID);
+            album.Rating = album.GetRating(_context);
+            _context.Update(album);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AlbumsController.Index), "Albums");
         }
     }
 }
