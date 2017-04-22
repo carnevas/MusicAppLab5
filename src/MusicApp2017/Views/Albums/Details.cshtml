@@ -65,18 +65,20 @@
         <dd>
             @Model.Genre.Name
         </dd>
+        @if(Model.GetRating(context) != 0)
+        { 
         <dt>
-            @Html.DisplayNameFor(model => model.GetRating(context).Result)
+            Rating:
         </dt>
         <dd>
-            @Model.GetRating(context).Result out of 5
+            @Model.GetRating(context) out of 5
         </dd>
+        }
     </dl>
 </div>
 @if (User.Identity.IsAuthenticated)
 {
 <hr/>
-<input type="hidden" asp-route-id="@Model.AlbumID"/>
 @await Html.PartialAsync("Rate")
 }
 else

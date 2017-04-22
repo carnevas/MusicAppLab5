@@ -93,7 +93,7 @@
                     <td>
                         @if (item.GetRating(context) != 0.0)
                         {
-                            @Html.DisplayFor(modelItem => item.GetRating(context));
+                            @item.GetRating(context);
                         }
                     </td>
                     <td>
@@ -146,9 +146,9 @@ else
                 </a>
             </td>
             <td>
-                @if (item.GetRating(context) != 0.0)
+                @if (item.GetRating(context) != 0)
                 {
-                    @Html.DisplayFor(modelItem => item.GetRating(context));
+                    @item.GetRating(context);
                 }
             </td>
             <td>

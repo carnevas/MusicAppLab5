@@ -24,27 +24,40 @@ namespace MusicApp2017.Controllers
             _userManager = userManager;
         }
         [Authorize]
-        public IActionResult Rate(int? id)
+        public IActionResult Rate(int? id, string returnUrl = null)
         {
             var album = _context.Albums.Where(a => a.AlbumID == id);
+            ViewData["returnUrl"] = returnUrl;
             ViewData["Values"] = new SelectList(Enumerable.Range(1, 5));
             return View(album);
         }
         [HttpPost]
-        public async Task<IActionResult> Rate(int value, int id)
-        {
-            if (ModelState.IsValid)
+        public async Task<IActionResult> Rate(int id, int value, string returnUrl = null)
+        {    //var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == id);
+            Rating rating = new Rating
             {
-                var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == id);
-                var rating = new Rating();
-                rating.AlbumID = id;
-                rating.RatingValue = value;
-                rating.UserID = _userManager.GetUserId(User);
-                _context.Add(rating);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                AlbumID = id,
+                RatingValue = value,
+                UserID = _userManager.GetUserId(User)
+            };
+            rating.AlbumID = id;
+            var album = await _context.Albums.SingleOrDefaultAsync(a => a.AlbumID == rating.AlbumID);
+            album.Rating = album.GetRating(_context);
+            _context.Update(album);
+            _context.Ratings.Add(rating);
+            await _context.SaveChangesAsync();
+            return RedirectToLocal(returnUrl);
+        }
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
             }
-            return View(value);
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
         }
     }
 }

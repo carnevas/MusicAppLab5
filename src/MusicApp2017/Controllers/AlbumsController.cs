@@ -59,10 +59,8 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-            ViewData["Rating"] = album.GetRating(_context).Result;
             return View(album);
         }
-        
 
         // GET: Albums/Create
         [Authorize]

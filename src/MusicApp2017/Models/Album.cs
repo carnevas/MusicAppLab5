@@ -22,24 +22,23 @@ namespace MusicApp2017.Models
         // Navigation property
         public Genre Genre { get; set; }
 
+        public double Rating { get; set; }
+
         public double GetRating(MusicDbContext _context)
         {
+            double rating = 0;
             var ratings =  _context.Ratings
                 .Where(a => a.AlbumID == AlbumID).ToList();
-            if (ratings == null)
-            {
-                return 0;
-            }
-            else
+            if(ratings.Count > 0)
             {
                 double sum = 0;
                 foreach (Rating value in ratings)
                 {
                     sum += value.RatingValue;
                 }
-                double rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero);
-                return rating;
+                rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero); 
             }
+            return rating;
         }
     }
 }
