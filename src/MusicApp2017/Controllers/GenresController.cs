@@ -77,7 +77,7 @@ namespace MusicApp2017.Controllers
             return View(genre);
         }
         // GET: Genres/Edit/5
-        [Authorize]
+        [Authorize (Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
