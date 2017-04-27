@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MusicApp2017.Models
 {
@@ -22,5 +21,25 @@ namespace MusicApp2017.Models
         public int GenreID { get; set; }
         // Navigation property
         public Genre Genre { get; set; }
+
+        [Display(Name ="Rating")]
+        public double Rating { get; set; }
+
+        public double GetRating(MusicDbContext _context)
+        {
+            double rating = 0;
+            var ratings =  _context.Ratings
+                .Where(a => a.AlbumID == AlbumID).ToList();
+            if(ratings.Count > 0)
+            {
+                double sum = 0;
+                foreach (Rating value in ratings)
+                {
+                    sum += value.RatingValue;
+                }
+                rating = Math.Round(sum / ratings.Count, 1, MidpointRounding.AwayFromZero); 
+            }
+            return rating;
+        }
     }
 }

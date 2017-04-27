@@ -1,0 +1,24 @@
+﻿@using MusicApp2017.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+<form asp-controller="Ratings" asp-action="Rate">
+    <div class="form-group">
+        <label value="Rating" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <select name="value" class="form-control input-sm">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div>
+        <input type="hidden" name="id" value="@Model.AlbumID"/>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Rate" class="btn btn-default" />
+        </div>
+    </div>
+</form>    
