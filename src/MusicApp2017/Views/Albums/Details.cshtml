@@ -1,4 +1,8 @@
 @model MusicApp2017.Models.Album
+@using MusicApp2017.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject MusicDbContext context
 
 @{
     ViewData["Title"] = "Details";
@@ -49,7 +53,7 @@
         @if (Model.Artist.Bio != null)
         {
             <dt>
-                Artist Bio:
+                @Html.DisplayNameFor(model => model.Artist.Bio):
             </dt>
             <dd>
                 @Model.Artist.Bio
@@ -61,8 +65,26 @@
         <dd>
             @Model.Genre.Name
         </dd>
+        @if(Model.Rating != 0)
+        { 
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating):
+        </dt>
+        <dd>
+            @Model.Rating out of 5
+        </dd>
+        }
     </dl>
 </div>
+@if (User.Identity.IsAuthenticated)
+{
+<hr/>
+@await Html.PartialAsync("Rate")
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login">Log in to Rate Album</a>
+}
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AlbumID">Edit</a> |
     <a asp-action="Index">Album List</a>

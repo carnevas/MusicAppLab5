@@ -13,6 +13,7 @@ namespace MusicApp2017.Controllers
     {
         private readonly MusicDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly RoleManager<ApplicationUser> _roleManager;
 
         public AlbumsController(MusicDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -24,7 +25,9 @@ namespace MusicApp2017.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(bool? all = false)
         {
-            var musicDbContext = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
+            var musicDbContext = _context.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Genre);
             if (User.Identity.IsAuthenticated)
             {
                 if (all == false)
@@ -57,7 +60,6 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-
             return View(album);
         }
 
@@ -98,7 +100,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Edit/5
-        [Authorize]
+        [Authorize (Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -121,7 +123,7 @@ namespace MusicApp2017.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,ArtistID,GenreID,Likes")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,ArtistID,GenreID")] Album album)
         {
             if (id != album.AlbumID)
             {
@@ -154,7 +156,7 @@ namespace MusicApp2017.Controllers
         }
 
         // GET: Albums/Delete/5
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -170,7 +172,6 @@ namespace MusicApp2017.Controllers
             {
                 return NotFound();
             }
-
             return View(album);
         }
 
@@ -184,7 +185,6 @@ namespace MusicApp2017.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
         private bool AlbumExists(int id)
         {
             return _context.Albums.Any(e => e.AlbumID == id);
