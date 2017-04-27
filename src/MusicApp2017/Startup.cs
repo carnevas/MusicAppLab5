@@ -67,6 +67,7 @@ namespace MusicApp2017
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseIdentity();
 
