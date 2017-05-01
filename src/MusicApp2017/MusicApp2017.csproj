@@ -16,7 +16,6 @@
     <Content Include="wwwroot\app\albums\album.component.ts" />
     <Content Include="wwwroot\app\albums\albumlist.component.html" />
     <Content Include="wwwroot\app\albums\albumlist.component.ts" />
-    <Content Include="wwwroot\app\albums\htmlpage.html" />
     <Content Include="wwwroot\app\app.component.html" />
     <Content Include="wwwroot\app\app.component.js" />
     <Content Include="wwwroot\app\app.component.js.map" />

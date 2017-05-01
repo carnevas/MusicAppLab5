@@ -38,7 +38,7 @@ var AddAlbumComponent = (function () {
 }());
 AddAlbumComponent = __decorate([
     core_1.Component({
-        selector: 'albums',
+        selector: 'addalbum',
         templateUrl: './addalbum.component.html'
     }),
     __metadata("design:paramtypes", [http_1.Http])

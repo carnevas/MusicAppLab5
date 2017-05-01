@@ -28,7 +28,6 @@ AppModule = __decorate([
                 { path: 'home', component: home_component_1.HomeComponent },
                 { path: 'albums/:id', component: album_component_1.AlbumComponent },
                 { path: 'albums', component: albumlist_component_1.AlbumListComponent },
-                { path: 'albums/addalbum', component: addalbum_component_1.AddAlbumComponent },
                 { path: '**', redirectTo: 'home' }
             ])],
         declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, navmenu_component_1.NavMenuComponent, album_component_1.AlbumComponent, albumlist_component_1.AlbumListComponent, addalbum_component_1.AddAlbumComponent],

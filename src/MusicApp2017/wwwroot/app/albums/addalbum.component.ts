@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Http, Headers } from '@angular/http';
 
 @Component({
-    selector: 'albums',
+    selector: 'addalbum',
     templateUrl: './addalbum.component.html'
 })
 

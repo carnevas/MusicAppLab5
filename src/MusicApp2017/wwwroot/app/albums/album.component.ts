@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'albums',
+    selector: 'album',
     templateUrl: './album.component.html'
 })
 

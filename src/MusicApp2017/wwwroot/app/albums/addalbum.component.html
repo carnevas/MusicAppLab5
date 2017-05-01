@@ -27,8 +27,8 @@
                     <select id="artistID" class="form-control" 
                             [(ngModel)]="model.artistID" name="artistID"
                             #artistID="ngModel"
+                            ng-options="artist.artistID for artist in artists"
                             required>
-                        <options *ngFor="let artist of artists" value={{artist.artistID}}>{{artist.name}}</options>
                     </select>
                     <div *ngIf="artistID.errors && artistID.touched"
                          class="alert alert-danger">
@@ -45,7 +45,8 @@
                             [(ngModel)]="model.genreID" name="genreID"
                             #genreID="ngModel"
                             required>
-                        <options *ngFor="let genre of genres" value={{genre.genreID}}>{{genre.name}}</options>
+                        <option value="0">--Select Genre--</option>
+                        <option *ngFor="let genre of genres" value={{genre.genreID}}>{{genre.name}}</option>
                     </select>
                     <div *ngIf="genreID.errors && genreID.touched"
                          class="alert alert-danger">

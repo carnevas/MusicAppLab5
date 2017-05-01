@@ -23,7 +23,7 @@ var AlbumComponent = (function () {
 }());
 AlbumComponent = __decorate([
     core_1.Component({
-        selector: 'albums',
+        selector: 'album',
         templateUrl: './album.component.html'
     }),
     __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])

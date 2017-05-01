@@ -17,7 +17,6 @@ import { AddAlbumComponent } from './albums/addalbum.component';
         { path: 'home', component: HomeComponent },
         { path: 'albums/:id', component: AlbumComponent },
         { path: 'albums', component: AlbumListComponent },
-        { path: 'albums/addalbum', component: AddAlbumComponent},
         { path: '**', redirectTo: 'home' }
 
     ])],

@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 
 @Component({
-    selector: 'albums',
+    selector: 'albumlist',
     templateUrl: './albumlist.component.html'
 })
 
