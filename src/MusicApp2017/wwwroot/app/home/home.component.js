@@ -6,17 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var NavMenuComponent = (function () {
-    function NavMenuComponent() {
+var HomeComponent = (function () {
+    function HomeComponent() {
+        this.name = "Angular";
     }
-    return NavMenuComponent;
+    return HomeComponent;
 }());
-NavMenuComponent = __decorate([
+HomeComponent = __decorate([
     core_1.Component({
-        selector: 'nav-menu',
-        templateUrl: './navmenu.component.html',
-        styleUrls: ['./navmenu.component.css']
+        selector: 'home',
+        templateUrl: './home.component.html'
     })
-], NavMenuComponent);
-exports.NavMenuComponent = NavMenuComponent;
-//# sourceMappingURL=navmenu.component.js.map
+], HomeComponent);
+exports.HomeComponent = HomeComponent;
+//# sourceMappingURL=home.component.js.map

@@ -6,17 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var NavMenuComponent = (function () {
-    function NavMenuComponent() {
+var AlbumListComponent = (function () {
+    function AlbumListComponent() {
+        this.name = "Angular";
     }
-    return NavMenuComponent;
+    return AlbumListComponent;
 }());
-NavMenuComponent = __decorate([
+AlbumListComponent = __decorate([
     core_1.Component({
-        selector: 'nav-menu',
-        templateUrl: './navmenu.component.html',
-        styleUrls: ['./navmenu.component.css']
+        selector: 'albums',
+        templateUrl: './albumlist.component.html'
     })
-], NavMenuComponent);
-exports.NavMenuComponent = NavMenuComponent;
-//# sourceMappingURL=navmenu.component.js.map
+], AlbumListComponent);
+exports.AlbumListComponent = AlbumListComponent;
+//# sourceMappingURL=albumlist.component.js.map

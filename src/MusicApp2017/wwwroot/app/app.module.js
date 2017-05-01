@@ -16,7 +16,6 @@ var home_component_1 = require("./home/home.component");
 var album_component_1 = require("./albums/album.component");
 var albumlist_component_1 = require("./albums/albumlist.component");
 var addalbum_component_1 = require("./albums/addalbum.component");
-var weather_component_1 = require("./weather/weather.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -27,13 +26,11 @@ AppModule = __decorate([
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, http_1.JsonpModule, forms_1.FormsModule, router_1.RouterModule.forRoot([
                 { path: '', redirectTo: 'home', pathMatch: 'full' },
                 { path: 'home', component: home_component_1.HomeComponent },
-                { path: 'weather', component: weather_component_1.WeatherComponent },
                 { path: 'albums/:id', component: album_component_1.AlbumComponent },
                 { path: 'albums', component: albumlist_component_1.AlbumListComponent },
                 { path: '**', redirectTo: 'home' }
             ])],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, navmenu_component_1.NavMenuComponent, weather_component_1.WeatherComponent,
-            album_component_1.AlbumComponent, albumlist_component_1.AlbumListComponent, addalbum_component_1.AddAlbumComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, navmenu_component_1.NavMenuComponent, album_component_1.AlbumComponent, albumlist_component_1.AlbumListComponent, addalbum_component_1.AddAlbumComponent],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
