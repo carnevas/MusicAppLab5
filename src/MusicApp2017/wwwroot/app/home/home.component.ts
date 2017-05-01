@@ -6,5 +6,5 @@
 })
 
 export class HomeComponent {
-    name = "Angular";
+    name = "User";
 }

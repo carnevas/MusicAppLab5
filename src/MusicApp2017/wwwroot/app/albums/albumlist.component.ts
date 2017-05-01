@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Component({
     selector: 'albums',
@@ -6,5 +7,18 @@
 })
 
 export class AlbumListComponent {
-    name = "Angular";
+    public albums: Album[];
+    constructor(http: Http) {
+        http.get('/api/albums').subscribe(result => {
+            this.albums = result.json();
+        });
+    }
+}
+
+interface Album {
+    albumID: number;
+    title: string;
+    artist: string;
+    genre: string;
+    rating: number;
 }
