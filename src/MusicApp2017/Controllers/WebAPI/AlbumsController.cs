@@ -21,12 +21,12 @@ namespace MusicApp2017.Controllers.WebAPI
         }
         // GET: api/albums
         [HttpGet]
-        public IEnumerable<Album> Get()
+        public async Task<IEnumerable<Album>> Get()
         {
             var albums = _context.Albums
                 .Include(a => a.Artist)
                 .Include(a => a.Genre);
-            return albums.ToList();
+            return await albums.ToListAsync();
         }
 
         // GET api/albums/5

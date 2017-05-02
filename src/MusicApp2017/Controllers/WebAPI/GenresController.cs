@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MusicApp2017.Models;
-
+using Microsoft.EntityFrameworkCore;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MusicApp2017.Controllers.WebAPI
@@ -19,16 +19,16 @@ namespace MusicApp2017.Controllers.WebAPI
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Genre> Get()
+        public async Task<IEnumerable<Genre>> Get()
         {
-            return _context.Genres.ToList();
+            return await _context.Genres.ToListAsync();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Genre Get(int id)
+        public Task<Genre> Get(int id)
         {
-            return _context.Genres.SingleOrDefault(a => a.GenreID == id);
+            return _context.Genres.SingleOrDefaultAsync(a => a.GenreID == id);
         }
 
         // POST api/values

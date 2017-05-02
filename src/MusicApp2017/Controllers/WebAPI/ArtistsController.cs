@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicApp2017.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,9 +21,9 @@ namespace MusicApp2017.Controllers.WebAPI
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Artist> Get()
+        public async Task<IEnumerable<Artist>> Get()
         {
-            return _context.Artists.ToList();
+            return await _context.Artists.ToListAsync();
         }
 
         // GET api/values/5

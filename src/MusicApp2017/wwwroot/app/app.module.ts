@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { AlbumComponent } from './albums/album.component';
 import { AlbumListComponent } from './albums/albumlist.component';
 import { AddAlbumComponent } from './albums/addalbum.component';
+import { DeleteAlbumComponent } from './albums/deletealbum.component';
+import { UpdateAlbumComponent } from './albums/updatealbum.component';
 
 @NgModule({
     imports: [BrowserModule, HttpModule, JsonpModule, FormsModule, RouterModule.forRoot([
