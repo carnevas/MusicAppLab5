@@ -13,6 +13,9 @@ export class AlbumListComponent {
             this.albums = result.json();
         });
     }
+    filter() {
+
+    }
 }
 
 interface Album {

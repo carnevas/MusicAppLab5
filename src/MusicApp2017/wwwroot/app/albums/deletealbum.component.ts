@@ -1,6 +1,5 @@
 ﻿import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'deletealbum',
@@ -9,11 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 
 export class DeleteAlbumComponent {
     public album: Album;
-    constructor(http: Http, route: ActivatedRoute) {
-        var id = route.snapshot.params['id'];
-        http.delete('/api/albums/' + id).subscribe(result => {
-            this.album = result.json();
-        })
+    constructor(private http: Http) {
+        this.http = http;
+    }
+    deleteAlbum(id: number) {
+        this.http.delete('/api/albums/' + id, { params: { id: id } });
     }
 }
 
@@ -22,5 +21,4 @@ interface Album {
     title: string;
     artist: string;
     genre: string;
-}
 }

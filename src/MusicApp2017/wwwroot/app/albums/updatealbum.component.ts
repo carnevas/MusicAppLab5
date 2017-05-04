@@ -29,11 +29,11 @@ export class UpdateAlbumComponent {
         });
         })
     }
-    onSubmit(form: NgForm)
+    onSubmit(form: NgForm, id: number)
     {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('/api/albums', JSON.stringify(this.album), { headers: headers }).subscribe(res => this.postResponse = res.json());
+        this.http.put('/api/albums' + id, JSON.stringify(this.album), { headers: headers }).subscribe();
         form.reset();
         this.showForm = !this.showForm;
     }

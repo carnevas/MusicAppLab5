@@ -23,7 +23,7 @@ import { UpdateAlbumComponent } from './albums/updatealbum.component';
 
     ])],
 
-    declarations: [AppComponent, HomeComponent, NavMenuComponent, AlbumComponent, AlbumListComponent, AddAlbumComponent],
+    declarations: [AppComponent, HomeComponent, NavMenuComponent, AlbumComponent, AlbumListComponent, AddAlbumComponent, DeleteAlbumComponent, UpdateAlbumComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

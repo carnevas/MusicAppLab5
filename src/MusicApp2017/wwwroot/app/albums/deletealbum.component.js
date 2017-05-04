@@ -10,24 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var router_1 = require("@angular/router");
-var AlbumComponent = (function () {
-    function AlbumComponent(http, route) {
-        var _this = this;
-        this.showForm = false;
-        var id = route.snapshot.params['id'];
-        http.get('/api/albums/' + id).subscribe(function (result) {
-            _this.album = result.json();
-        });
+var DeleteAlbumComponent = (function () {
+    function DeleteAlbumComponent(http) {
+        this.http = http;
+        this.http = http;
     }
-    return AlbumComponent;
+    DeleteAlbumComponent.prototype.deleteAlbum = function (id) {
+        this.http.delete('/api/albums/' + id, { params: { id: id } });
+    };
+    return DeleteAlbumComponent;
 }());
-AlbumComponent = __decorate([
+DeleteAlbumComponent = __decorate([
     core_1.Component({
-        selector: 'album',
-        templateUrl: './album.component.html'
+        selector: 'deletealbum',
+        templateUrl: './deletealbum.component.html'
     }),
-    __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])
-], AlbumComponent);
-exports.AlbumComponent = AlbumComponent;
-//# sourceMappingURL=album.component.js.map
+    __metadata("design:paramtypes", [http_1.Http])
+], DeleteAlbumComponent);
+exports.DeleteAlbumComponent = DeleteAlbumComponent;
+//# sourceMappingURL=deletealbum.component.js.map

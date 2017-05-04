@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class AlbumComponent {
     public album: Album;
+    showForm = false;
     constructor(http: Http, route: ActivatedRoute) {
         var id = route.snapshot.params['id'];
         http.get('/api/albums/' + id).subscribe(result => {

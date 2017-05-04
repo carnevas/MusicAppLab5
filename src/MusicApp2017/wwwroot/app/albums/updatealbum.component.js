@@ -11,23 +11,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
-var AlbumComponent = (function () {
-    function AlbumComponent(http, route) {
+var UpdateAlbumComponent = (function () {
+    function UpdateAlbumComponent(http, route) {
         var _this = this;
+        this.http = http;
         this.showForm = false;
         var id = route.snapshot.params['id'];
         http.get('/api/albums/' + id).subscribe(function (result) {
             _this.album = result.json();
+            http.get('/api/artists').subscribe(function (result) {
+                _this.artists = result.json();
+            });
+            http.get('/api/genres').subscribe(function (result) {
+                _this.genres = result.json();
+            });
         });
     }
-    return AlbumComponent;
+    UpdateAlbumComponent.prototype.onSubmit = function (form, id) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        this.http.put('/api/albums' + id, JSON.stringify(this.album), { headers: headers }).subscribe();
+        form.reset();
+        this.showForm = !this.showForm;
+    };
+    UpdateAlbumComponent.prototype.toggleForm = function () {
+        this.showForm = !this.showForm;
+    };
+    return UpdateAlbumComponent;
 }());
-AlbumComponent = __decorate([
+UpdateAlbumComponent = __decorate([
     core_1.Component({
-        selector: 'album',
-        templateUrl: './album.component.html'
+        selector: 'updatealbum',
+        templateUrl: './updatealbum.component.html'
     }),
     __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])
-], AlbumComponent);
-exports.AlbumComponent = AlbumComponent;
-//# sourceMappingURL=album.component.js.map
+], UpdateAlbumComponent);
+exports.UpdateAlbumComponent = UpdateAlbumComponent;
+//# sourceMappingURL=updatealbum.component.js.map

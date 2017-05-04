@@ -16,6 +16,8 @@ var home_component_1 = require("./home/home.component");
 var album_component_1 = require("./albums/album.component");
 var albumlist_component_1 = require("./albums/albumlist.component");
 var addalbum_component_1 = require("./albums/addalbum.component");
+var deletealbum_component_1 = require("./albums/deletealbum.component");
+var updatealbum_component_1 = require("./albums/updatealbum.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -30,7 +32,7 @@ AppModule = __decorate([
                 { path: 'albums', component: albumlist_component_1.AlbumListComponent },
                 { path: '**', redirectTo: 'home' }
             ])],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, navmenu_component_1.NavMenuComponent, album_component_1.AlbumComponent, albumlist_component_1.AlbumListComponent, addalbum_component_1.AddAlbumComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, navmenu_component_1.NavMenuComponent, album_component_1.AlbumComponent, albumlist_component_1.AlbumListComponent, addalbum_component_1.AddAlbumComponent, deletealbum_component_1.DeleteAlbumComponent, updatealbum_component_1.UpdateAlbumComponent],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

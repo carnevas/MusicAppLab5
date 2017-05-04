@@ -1,20 +1,11 @@
-﻿<head>
-    <script
-        src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-    </script>
-    <script
-        src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js">
- 
-    </script>
-</head>
-<h1>Albums</h1>
+﻿<h1>Albums</h1>
 <p *ngIf="!albums"><em>Loading albums...</em></p>
 <form>
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Search albums" ng-model="searchAlbums" />
-            <p>Search: {{searchAlbums}}</p>
+        <label id="title" class="col-md-2 control-label">Search:</label>
+        <div class="col-md-10">
+            <input type="text" id="title" class="form-control" placeholder="Search Albums..." ng-model="searchAlbums"/>
+
         </div>
     </div>
 </form>
@@ -27,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let album of albums">
+        <tr *ngFor="let album of albums | filter: searchAlbums">
             <td [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/albums', album.albumID]">{{ album.title }}</a>
             </td>
