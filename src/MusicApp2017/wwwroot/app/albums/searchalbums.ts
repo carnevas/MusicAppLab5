@@ -1,57 +1,22 @@
-﻿import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Http, Headers } from '@angular/http';
-
+﻿import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
-    selector: 'addalbum',
-    templateUrl: './addalbum.component.html'
+    selector: 'searchalbums'
+    templateUrl: './searchalbums.component.html'
 })
 
-export class AddAlbumComponent {
-    model: Album = new Album();
-    postResponse: Object;
-    showForm = false;
-    public artists: Artist[]
-    public genres: Genre[]
+@Pipe({
+    name: 'searchAlbums',
+    pure: false
+})
 
-    constructor(private http: Http) {
-        http.get('/api/artists').subscribe(result => {
-            this.artists = result.json();
-        });
-        http.get('/api/genres').subscribe(result => {
-            this.genres = result.json();
-        });
+@Injectable()
+export class SearchAlbumsPipe implements PipeTransform {
+    transform(albums: any[], args: any[]): any {
+        albums.filter(album => album.title.toLowerCase().indexOf(args[0].toLowerCase()) !== -1);
+        albums.filter(album => album.artist.name.toLowerCase().indexOf(args[0].toLowerCase()) !== -1);
+        albums.filter(album => album.genre.name.toLowerCase().indexOf(args[0].toLowerCase()) !== -1);
+        return albums;
     }
-    onSubmit(form: NgForm) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.http.post('/api/albums', JSON.stringify(this.model), { headers: headers }).subscribe(res => this.postResponse = res.json());
-        form.reset();
-        this.showForm = !this.showForm;
-    }
-
-    toggleForm() {
-        this.showForm = !this.showForm;
-    }
-}
-
-class Album {
-    constructor(
-        private albumID: number = 0,
-        public title: string = null,
-        public artistID: number = 0,
-        public genreID: number = 0,
-        public rating: number = 0
-    ) { }
-}
-
-interface Artist {
-    artistID: number;
-    name: string;
-    bio: string;
-}
-
-interface Genre {
-    genreID: number;
-    name: string;
 }

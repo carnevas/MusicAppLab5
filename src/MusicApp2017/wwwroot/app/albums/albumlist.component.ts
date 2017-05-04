@@ -1,8 +1,10 @@
 ﻿import { Component } from '@angular/core';
 import { Http } from '@angular/http';
+import { SearchAlbumsPipe } from './searchalbums';
 
 @Component({
     selector: 'albumlist',
+    pipes: [SearchAlbumsPipe],
     templateUrl: './albumlist.component.html'
 })
 

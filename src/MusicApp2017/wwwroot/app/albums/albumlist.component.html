@@ -1,9 +1,9 @@
 ﻿<h1>Albums</h1>
 <p *ngIf="!albums"><em>Loading albums...</em></p>
 <div *ngIf="albums">
-    <input type="text" id="myInput" onkeyup="filter()" placeholder="Search Albums..." />
+    <input type="text" id="search" (onkeyup)="filter()" placeholder="Search Albums..." />
 
-    <table class="table" id="myTable" *ngIf="albums">
+    <table class="table" id="albums" *ngIf="albums">
         <thead>
             <tr>
                 <th>Title</th>
@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let album of albums | filter: searchAlbums">
+        <tr *ngFor="let album of albums | searchAlbums : album ">
                 <td [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/albums', album.albumID]">{{ album.title }}</a>
                 </td>
