@@ -14,7 +14,24 @@ export class AlbumListComponent {
         });
     }
     filter() {
-
+        var filter, table, tr, td, i;
+        var input = document.getElementById("search");
+        filter = input.nodeValue.toLowerCase();
+        table = document.getElementById("albums");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                var item = td[j];
+                if (item) {
+                    if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
     }
 }
 

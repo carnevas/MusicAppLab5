@@ -21,6 +21,7 @@
     <Content Include="wwwroot\app\albums\deletealbum.component.js.map" />
     <Content Include="wwwroot\app\albums\deletealbum.component.ts" />
     <Content Include="wwwroot\app\albums\deletealbum.ts" />
+    <Content Include="wwwroot\app\albums\searchalbums.ts" />
     <Content Include="wwwroot\app\albums\updatealbum.component.html" />
     <Content Include="wwwroot\app\albums\updatealbum.component.js" />
     <Content Include="wwwroot\app\albums\updatealbum.component.js.map" />

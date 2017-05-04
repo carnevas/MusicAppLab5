@@ -1,30 +1,25 @@
 ﻿<h1>Albums</h1>
 <p *ngIf="!albums"><em>Loading albums...</em></p>
-<form>
-    <div class="form-group">
-        <label id="title" class="col-md-2 control-label">Search:</label>
-        <div class="col-md-10">
-            <input type="text" id="title" class="form-control" placeholder="Search Albums..." ng-model="searchAlbums"/>
+<div *ngIf="albums">
+    <input type="text" id="myInput" onkeyup="filter()" placeholder="Search Albums..." />
 
-        </div>
-    </div>
-</form>
-<table class="table" *ngIf="albums">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Genre</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let album of albums | filter: searchAlbums">
-            <td [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/albums', album.albumID]">{{ album.title }}</a>
-            </td>
-            <td>{{album.artist.name}}</td>
-            <td>{{album.genre.name}}</td>
-        </tr>
-    </tbody>
-</table>
-<addalbum></addalbum>
+    <table class="table" id="myTable" *ngIf="albums">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let album of albums | filter: searchAlbums">
+                <td [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/albums', album.albumID]">{{ album.title }}</a>
+                </td>
+                <td>{{album.artist.name}}</td>
+                <td>{{album.genre.name}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <addalbum></addalbum>
+</div>
