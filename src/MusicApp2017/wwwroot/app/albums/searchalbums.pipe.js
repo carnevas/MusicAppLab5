@@ -15,9 +15,10 @@ var SearchAlbumsPipe = (function () {
             return albums;
         }
         else {
-            return albums.filter(function (album) { return album.title.toLowerCase().indexOf(search.toLowerCase()) !== -1; })
+            albums = albums.filter(function (album) { return album.title.toLowerCase().indexOf(search.toLowerCase()) !== -1; })
                 || albums.filter(function (album) { return album.artist.name.toLowerCase().indexOf(search.toLowerCase()) !== -1; })
                 || albums.filter(function (album) { return album.genre.name.toLowerCase().indexOf(search.toLowerCase()) !== -1; });
+            return albums;
         }
     };
     return SearchAlbumsPipe;

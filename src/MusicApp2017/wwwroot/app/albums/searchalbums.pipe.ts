@@ -13,9 +13,10 @@ export class SearchAlbumsPipe implements PipeTransform {
             return albums;
         }
         else {
-            return albums.filter(album => album.title.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+            albums = albums.filter(album => album.title.toLowerCase().indexOf(search.toLowerCase()) !== -1)
                 || albums.filter(album => album.artist.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
                 || albums.filter(album => album.genre.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+            return albums;
         }
 
     }

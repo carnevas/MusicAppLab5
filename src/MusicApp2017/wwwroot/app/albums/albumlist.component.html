@@ -1,7 +1,7 @@
 ﻿<h1>Albums</h1>
 <p *ngIf="!albums"><em>Loading albums...</em></p>
 <div *ngIf="albums">
-    <input type="text" ng-model="search" placeholder="Search Albums..." />
+    <input type="text" [(ngModel)]="search" placeholder="Search Albums..." />
 
     <table class="table" *ngIf="albums">
         <thead>

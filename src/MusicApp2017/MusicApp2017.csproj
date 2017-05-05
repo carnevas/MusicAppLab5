@@ -16,7 +16,6 @@
     <Content Include="wwwroot\app\albums\album.component.ts" />
     <Content Include="wwwroot\app\albums\albumlist.component.html" />
     <Content Include="wwwroot\app\albums\albumlist.component.ts" />
-    <Content Include="wwwroot\app\albums\searchalbums.component.js.map" />
     <Content Include="wwwroot\app\albums\searchalbums.pipe.js" />
     <Content Include="wwwroot\app\albums\searchalbums.pipe.js.map" />
     <Content Include="wwwroot\app\albums\searchalbums.pipe.ts" />

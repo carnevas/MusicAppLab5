@@ -29,12 +29,15 @@ var AlbumComponent = (function () {
         });
     }
     AlbumComponent.prototype.deleteAlbum = function () {
-        this.http.delete('/api/albums/' + this.album.albumID).subscribe();
+        var _this = this;
+        this.http.delete('/api/albums/' + this.album.albumID).subscribe(function (res) { return _this.deleteResponse = res.json(); });
         this.router.navigateByUrl("./albums");
     };
     AlbumComponent.prototype.onSubmit = function (form) {
         var _this = this;
-        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album)).subscribe(function (res) { return _this.putResponse = res.json(); });
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album), { headers: headers }).subscribe(function (res) { return _this.putResponse = res.json(); });
         form.reset();
         this.showForm = !this.showForm;
     };

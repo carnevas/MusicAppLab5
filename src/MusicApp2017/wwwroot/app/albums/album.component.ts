@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -15,6 +15,7 @@ export class AlbumComponent {
     public genres: Genre[];
     public router: Router;
     public putResponse: Object;
+    public deleteResponse: Object;
     constructor(private http: Http, route: ActivatedRoute, router: Router) {
         this.router = router;
         var id = route.snapshot.params['id'];
@@ -29,11 +30,13 @@ export class AlbumComponent {
         });
     }
     deleteAlbum() {
-        this.http.delete('/api/albums/' + this.album.albumID).subscribe();
+        this.http.delete('/api/albums/' + this.album.albumID).subscribe(res => this.deleteResponse = res.json());
         this.router.navigateByUrl("./albums");
     }
     onSubmit(form: NgForm) {
-        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album)).subscribe(res => this.putResponse = res.json());
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album), { headers: headers }).subscribe(res => this.putResponse = res.json());
         form.reset();
         this.showForm = !this.showForm;
     }

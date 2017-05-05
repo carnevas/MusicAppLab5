@@ -52,7 +52,7 @@ namespace MusicApp2017.Controllers.WebAPI
         [HttpPut("{id}")]
         public async void Put([FromBody]Album album)
         {
-            _context.Update(album);
+            _context.Albums.Update(album);
             await _context.SaveChangesAsync();
         }
 
