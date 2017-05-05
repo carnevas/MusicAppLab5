@@ -50,19 +50,19 @@ namespace MusicApp2017.Controllers.WebAPI
 
         // PUT api/albums/5
         [HttpPut("{id}")]
-        public void Put([FromBody]Album album)
+        public async void Put([FromBody]Album album)
         {
             _context.Update(album);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         // DELETE api/albums/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(int id)
         {
             var album = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
-            _context.Remove(album);
-            _context.SaveChanges();
+            _context.Albums.Remove(album);
+            await _context.SaveChangesAsync();
         }
     }
 }

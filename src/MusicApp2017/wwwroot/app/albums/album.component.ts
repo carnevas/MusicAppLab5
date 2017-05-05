@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
+import { Http } from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,10 @@ export class AlbumComponent {
     showForm = false;
     public artists: Artist[];
     public genres: Genre[];
-    constructor(private http: Http, route: ActivatedRoute) {
+    public router: Router;
+    public putResponse: Object;
+    constructor(private http: Http, route: ActivatedRoute, router: Router) {
+        this.router = router;
         var id = route.snapshot.params['id'];
         http.get('/api/albums/' + id).subscribe(result => {
             this.album = result.json();
@@ -26,12 +29,11 @@ export class AlbumComponent {
         });
     }
     deleteAlbum() {
-        this.http.delete('/api/albums' + this.album.albumID, { id: this.album.albumID)};
+        this.http.delete('/api/albums/' + this.album.albumID).subscribe();
+        this.router.navigateByUrl("./albums");
     }
     onSubmit(form: NgForm) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        this.http.put('/api/albums' + this.album.albumID, JSON.stringify(this.album), { headers: headers }).subscribe();
+        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album)).subscribe(res => this.putResponse = res.json());
         form.reset();
         this.showForm = !this.showForm;
     }

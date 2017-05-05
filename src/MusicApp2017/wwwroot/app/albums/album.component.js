@@ -12,10 +12,11 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
 var AlbumComponent = (function () {
-    function AlbumComponent(http, route) {
+    function AlbumComponent(http, route, router) {
         var _this = this;
         this.http = http;
         this.showForm = false;
+        this.router = router;
         var id = route.snapshot.params['id'];
         http.get('/api/albums/' + id).subscribe(function (result) {
             _this.album = result.json();
@@ -28,12 +29,12 @@ var AlbumComponent = (function () {
         });
     }
     AlbumComponent.prototype.deleteAlbum = function () {
-        this.http.delete('/api/albums/' + this.album.albumID, { params: { id: this.album.albumID } });
+        this.http.delete('/api/albums/' + this.album.albumID).subscribe();
+        this.router.navigateByUrl("./albums");
     };
     AlbumComponent.prototype.onSubmit = function (form) {
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        this.http.put('/api/albums' + this.album.albumID, JSON.stringify(this.album), { headers: headers }).subscribe();
+        var _this = this;
+        this.http.put('/api/albums/' + this.album.albumID, JSON.stringify(this.album)).subscribe(function (res) { return _this.putResponse = res.json(); });
         form.reset();
         this.showForm = !this.showForm;
     };
@@ -47,7 +48,22 @@ AlbumComponent = __decorate([
         selector: 'album',
         templateUrl: './album.component.html'
     }),
-    __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute, router_1.Router])
 ], AlbumComponent);
 exports.AlbumComponent = AlbumComponent;
+var Album = (function () {
+    function Album(albumID, title, artistID, genreID, rating) {
+        if (albumID === void 0) { albumID = 0; }
+        if (title === void 0) { title = null; }
+        if (artistID === void 0) { artistID = 0; }
+        if (genreID === void 0) { genreID = 0; }
+        if (rating === void 0) { rating = 0; }
+        this.albumID = albumID;
+        this.title = title;
+        this.artistID = artistID;
+        this.genreID = genreID;
+        this.rating = rating;
+    }
+    return Album;
+}());
 //# sourceMappingURL=album.component.js.map

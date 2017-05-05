@@ -10,10 +10,15 @@ var core_2 = require("@angular/core");
 var SearchAlbumsPipe = (function () {
     function SearchAlbumsPipe() {
     }
-    SearchAlbumsPipe.prototype.transform = function (albums, args) {
-        return albums.filter(function (album) { return album.title.toLowerCase().indexOf(args[0].toLowerCase()) !== -1; })
-            || albums.filter(function (album) { return album.artist.name.toLowerCase().indexOf(args[0].toLowerCase()) !== -1; })
-            || albums.filter(function (album) { return album.genre.name.toLowerCase().indexOf(args[0].toLowerCase()) !== -1; });
+    SearchAlbumsPipe.prototype.transform = function (albums, search) {
+        if (search == null) {
+            return albums;
+        }
+        else {
+            return albums.filter(function (album) { return album.title.toLowerCase().indexOf(search.toLowerCase()) !== -1; })
+                || albums.filter(function (album) { return album.artist.name.toLowerCase().indexOf(search.toLowerCase()) !== -1; })
+                || albums.filter(function (album) { return album.genre.name.toLowerCase().indexOf(search.toLowerCase()) !== -1; });
+        }
     };
     return SearchAlbumsPipe;
 }());
