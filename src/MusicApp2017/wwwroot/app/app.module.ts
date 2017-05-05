@@ -10,9 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { AlbumComponent } from './albums/album.component';
 import { AlbumListComponent } from './albums/albumlist.component';
 import { AddAlbumComponent } from './albums/addalbum.component';
-import { DeleteAlbumComponent } from './albums/deletealbum.component';
-import { UpdateAlbumComponent } from './albums/updatealbum.component';
-
+import { SearchAlbumsPipe } from './albums/searchalbums.pipe';
 @NgModule({
     imports: [BrowserModule, HttpModule, JsonpModule, FormsModule, RouterModule.forRoot([
         { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,7 +21,7 @@ import { UpdateAlbumComponent } from './albums/updatealbum.component';
 
     ])],
 
-    declarations: [AppComponent, HomeComponent, NavMenuComponent, AlbumComponent, AlbumListComponent, AddAlbumComponent, DeleteAlbumComponent, UpdateAlbumComponent, SearchAlbumsPipe],
+    declarations: [AppComponent, HomeComponent, NavMenuComponent, AlbumComponent, AlbumListComponent, AddAlbumComponent, SearchAlbumsPipe],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

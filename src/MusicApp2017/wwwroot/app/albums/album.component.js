@@ -14,12 +14,32 @@ var router_1 = require("@angular/router");
 var AlbumComponent = (function () {
     function AlbumComponent(http, route) {
         var _this = this;
+        this.http = http;
         this.showForm = false;
         var id = route.snapshot.params['id'];
         http.get('/api/albums/' + id).subscribe(function (result) {
             _this.album = result.json();
         });
+        http.get('/api/artists').subscribe(function (result) {
+            _this.artists = result.json();
+        });
+        http.get('/api/genres').subscribe(function (result) {
+            _this.genres = result.json();
+        });
     }
+    AlbumComponent.prototype.deleteAlbum = function () {
+        this.http.delete('/api/albums/' + this.album.albumID, { params: { id: this.album.albumID } });
+    };
+    AlbumComponent.prototype.onSubmit = function (form) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        this.http.put('/api/albums' + this.album.albumID, JSON.stringify(this.album), { headers: headers }).subscribe();
+        form.reset();
+        this.showForm = !this.showForm;
+    };
+    AlbumComponent.prototype.toggleForm = function () {
+        this.showForm = !this.showForm;
+    };
     return AlbumComponent;
 }());
 AlbumComponent = __decorate([

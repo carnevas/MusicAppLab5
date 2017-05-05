@@ -1,10 +1,9 @@
 ﻿import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { SearchAlbumsPipe } from './searchalbums';
+import { SearchAlbumsPipe } from './searchalbums.pipe';
 
 @Component({
     selector: 'albumlist',
-    pipes: [SearchAlbumsPipe],
     templateUrl: './albumlist.component.html'
 })
 
@@ -15,32 +14,23 @@ export class AlbumListComponent {
             this.albums = result.json();
         });
     }
-    filter() {
-        var filter, table, tr, td, i;
-        var input = document.getElementById("search");
-        filter = input.nodeValue.toLowerCase();
-        table = document.getElementById("albums");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (var j = 0; j < td.length; j++) {
-                var item = td[j];
-                if (item) {
-                    if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    }
 }
 
 interface Album {
     albumID: number;
     title: string;
-    artist: string;
-    genre: string;
+    artist: Artist;
+    genre: Genre;
     rating: number;
+}
+
+interface Artist {
+    artistID: number;
+    name: string;
+    bio: string;
+}
+
+interface Genre {
+    genreID: number;
+    name: string;
 }
