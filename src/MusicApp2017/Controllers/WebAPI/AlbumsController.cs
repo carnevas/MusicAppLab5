@@ -61,8 +61,12 @@ namespace MusicApp2017.Controllers.WebAPI
         public async void Delete(int id)
         {
             var album = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
-            _context.Albums.Remove(album);
-            await _context.SaveChangesAsync();
+            if(album != null)
+            {
+                _context.Albums.Remove(album);
+                await _context.SaveChangesAsync();
+            }
+
         }
     }
 }
